@@ -22,6 +22,11 @@ public class AuthController : ControllerBase
         _tokenService = tokenService;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost("register")]
     public async Task<ActionResult<string>> Register(Register request)
     {
@@ -34,7 +39,10 @@ public class AuthController : ControllerBase
         var user = new User
         {
             Username = request.Username,
-            PasswordHash = HashPassword(request.Password)
+            PasswordHash = HashPassword(request.Password),
+            Email = request.Email,
+            MobileNumber = request.MobileNumber,
+            City = request.City
         };
 
         _context.Users.Add(user);
@@ -42,6 +50,7 @@ public class AuthController : ControllerBase
 
         return Ok($"User '{request.Username}' registered successfully.");
     }
+
 
 
     [HttpPost("login")]
